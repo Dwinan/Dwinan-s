@@ -35,6 +35,15 @@ void pop() {
     delete temp;
 }
 
+// Fungsi untuk melihat teks terakhir tanpa menghapusnya (peek)
+void peek() {
+    if (isEmpty()) {
+        cout << "Tidak ada teks yang tersimpan.\n";
+        return;
+    }
+    cout << "Teks terakhir yang dimasukkan: \"" << topPtr->data << "\"\n";
+}
+
 // Fungsi untuk menampilkan isi stack
 void display() {
     if (isEmpty()) {
@@ -44,7 +53,8 @@ void display() {
     cout << "Riwayat teks (dari terbaru ke terlama):\n";
     Node* cur = topPtr;
     while (cur != nullptr) {
-        cout << " " << cur->data;
+        cout << cur->data;
+        if (cur->next != nullptr) cout << " ";
         cur = cur->next;
     }
     cout << "\n";
@@ -56,11 +66,12 @@ int main() {
     string teks;
 
     do {
-        cout << "\n=== SIMULASI UNDO TEKS ===\n";
+        cout << "=== SIMULASI UNDO TEKS ===\n";
         cout << "1. Tambah teks\n";
         cout << "2. Undo teks terakhir\n";
-        cout << "3. Tampilkan riwayat teks\n";
-        cout << "4. Keluar\n";
+        cout << "3. Lihat teks terakhir\n";
+        cout << "4. Tampilkan riwayat teks\n";
+        cout << "5. Keluar\n";
         cout << "Pilih menu: ";
         cin >> pilihan;
         cin.ignore();
@@ -75,17 +86,19 @@ int main() {
                 pop();
                 break;
             case 3:
-                display();
+                peek();
                 break;
             case 4:
+                display();
+                break;
+            case 5:
                 cout << "Program selesai.\n";
                 break;
             default:
                 cout << "Pilihan tidak valid.\n";
         }
-    } while (pilihan != 4);
+    } while (pilihan != 5);
 
-    // Membersihkan memori
     while (!isEmpty()) pop();
     return 0;
 }
